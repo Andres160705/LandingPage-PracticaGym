@@ -1,0 +1,45 @@
+form{
+    display:grid;
+    gap:12px;
+    max-width:480px;
+    margin:0 auto;
+}
+
+  form input{
+    background-color: var(--ink-2);
+    border:1px solid rgba(241,236,226,.15);
+    color:var(--bone);
+    padding:10px;
+    border-radius: 5px;
+    width:100%;
+    font-size:16px;
+    font-family:inherit;
+  }
+
+  form label{
+    font-family:var(--font-mono);
+    text-transform:uppercase;
+    letter-spacing:.18em;
+    color:var(--brass);
+    font-size:14px;
+  }
+
+  form input:focus{
+  border-color: var(--brass);
+  outline: none;
+}
+ 
+.mensaje-exito{
+  color: green;
+  font-size: 14px;
+  text-align: center;
+  font-family: var(--font-mono);
+}
+
+
+.mensaje-error{
+  color: red;
+  font-size: 14px;
+  text-align: center;
+  font-family: var(--font-mono);
+}
