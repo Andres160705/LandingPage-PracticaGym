@@ -29,17 +29,20 @@ form{
   outline: none;
 }
  
+.mensaje-exito, .mensaje-error, .mensaje-warn{
+  font-size:14px; text-align:center; font-family:var(--font-mono);
+}
 .mensaje-exito{
   color: green;
-  font-size: 14px;
-  text-align: center;
-  font-family: var(--font-mono);
+}
+.mensaje-error{
+  color: red; 
+}
+.mensaje-warn{
+   color: var(--brass);
 }
 
-
-.mensaje-error{
-  color: red;
-  font-size: 14px;
-  text-align: center;
-  font-family: var(--font-mono);
+.honeypot{
+  position:absolute;
+  left:-9999px;   /* lo mandas a una galaxia lejana */
 }
