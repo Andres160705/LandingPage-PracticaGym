@@ -1,4 +1,4 @@
-import { Component, AfterViewInit } from '@angular/core';
+import { Component, AfterViewInit, OnDestroy } from '@angular/core';
 
 @Component({
   selector: 'app-lpagegym',
@@ -6,29 +6,53 @@ import { Component, AfterViewInit } from '@angular/core';
   templateUrl: './lpagegym.component.html',
   styleUrl: './lpagegym.component.css',
 })
-export class LpagegymComponent implements AfterViewInit {
+export class LpagegymComponent implements AfterViewInit, OnDestroy {
+  menuAbierto = false;
+
+  private revealObserver?: IntersectionObserver;
+
+  private readonly handleScroll = (): void => {
+    const header = document.getElementById('siteHeader');
+    if (header) {
+      header.classList.toggle('scrolled', window.scrollY > 24);
+    }
+  };
+
+  private readonly handleKeydown = (event: KeyboardEvent): void => {
+    if (event.key === 'Escape' && this.menuAbierto) {
+      this.cerrarMenu();
+    }
+  };
+
+  private readonly handleResize = (): void => {
+    if (window.innerWidth > 960 && this.menuAbierto) {
+      this.cerrarMenu();
+    }
+  };
+
   ngAfterViewInit(): void {
     this.setupReveal();
+    this.handleScroll();
 
-    // si Angular re-renderiza el HTML (al editar/guardar), re-aplica el efecto
-    const mo = new MutationObserver(() => this.setupReveal());
-    mo.observe(document.body, { childList: true, subtree: true });
+    window.addEventListener('scroll', this.handleScroll, { passive: true });
+    window.addEventListener('keydown', this.handleKeydown);
+    window.addEventListener('resize', this.handleResize);
+  }
 
-    window.addEventListener('scroll', () => {
-      const header = document.getElementById('siteHeader');
-      if (header) {
-        header.classList.toggle('scrolled', window.scrollY > 40);
-      }
-    });
+  ngOnDestroy(): void {
+    this.revealObserver?.disconnect();
+    window.removeEventListener('scroll', this.handleScroll);
+    window.removeEventListener('keydown', this.handleKeydown);
+    window.removeEventListener('resize', this.handleResize);
   }
 
   private setupReveal(): void {
-    const observer = new IntersectionObserver(
+    this.revealObserver = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             entry.target.classList.add('in');
-            observer.unobserve(entry.target);
+            this.revealObserver?.unobserve(entry.target);
           }
         });
       },
@@ -36,49 +60,61 @@ export class LpagegymComponent implements AfterViewInit {
     );
 
     document
-      .querySelectorAll('.reveal, .reveal-stagger, .bar-divider')
-      .forEach((el) => el.classList.contains('in') || observer.observe(el));
+      .querySelectorAll('.reveal, .plate-rack')
+      .forEach((el) => el.classList.contains('in') || this.revealObserver?.observe(el));
   }
 
   bloquearNumeros(event: Event): void {
     const input = event.target as HTMLInputElement;
-    input.value = input.value.replace(/[^A-Za-zÁÉÍÓÚáéíóúÑñ]/g, '');
+    input.value = input.value.replace(/[^A-Za-zÁÉÍÓÚÜáéíóúüÑñ' -]/g, '');
   }
 
   abrirMenuDesplegable(): void {
-    const navLinks = document.querySelector('.nav-links') as HTMLElement;
-    navLinks.classList.toggle('open');
+    this.menuAbierto = !this.menuAbierto;
+  }
+
+  cerrarMenu(): void {
+    this.menuAbierto = false;
   }
 
   async enviarFormulario(event: Event): Promise<void> {
     event.preventDefault();
 
-    const btnEnviar = document.getElementById(
-      'boton-enviar',
-    ) as HTMLButtonElement;
-    const mensaje = document.getElementById('mensaje') as HTMLElement;
+    const btnEnviar = document.getElementById('boton-enviar') as HTMLButtonElement | null;
+    const mensaje = document.getElementById('mensaje') as HTMLElement | null;
     const formulario = event.target as HTMLFormElement;
+
+    if (!btnEnviar || !mensaje) {
+      return;
+    }
+
+    const textoOriginal = btnEnviar.textContent?.trim() || 'Reservar sesión gratis';
     btnEnviar.disabled = true;
     btnEnviar.textContent = 'Enviando...';
+    mensaje.textContent = '';
+    mensaje.className = '';
 
     try {
+      const valor = (selector: string): string =>
+        (formulario.querySelector(selector) as HTMLInputElement | null)?.value.trim() ?? '';
+
       const datos = {
-        nombre: (formulario.querySelector('#name') as HTMLInputElement).value,
-        apellido: (formulario.querySelector('#lastname') as HTMLInputElement) .value,
-        edad: (formulario.querySelector('#edad') as HTMLInputElement).value,
-        contacto: (formulario.querySelector('#contacto') as HTMLInputElement) .value,
-        honeypot: (formulario.querySelector('.honeypot') as HTMLInputElement)  .value,
+        nombre: valor('#name'),
+        apellido: valor('#lastname'),
+        edad: valor('#edad'),
+        contacto: valor('#contacto'),
+        honeypot: valor('.honeypot'),
       };
 
-      const telefono = datos.contacto.trim();
+      const telefono = datos.contacto.replace(/\D/g, '');
       if (!/^\d{10}$/.test(telefono)) {
-        mensaje.textContent = 'El contacto debe contener solo números y menos de 20 caracteres.';
+        mensaje.textContent = 'Ingresa un número de contacto de 10 dígitos.';
         mensaje.className = 'mensaje-warn';
         return;
       }
 
-      const edad = Number(datos.edad); // convierte el texto a número real
-      if (!datos.edad.trim() || edad < 14 || edad > 80) {
+      const edad = Number(datos.edad);
+      if (!datos.edad || edad < 14 || edad > 80) {
         mensaje.textContent = 'La edad debe estar entre 14 y 80 años.';
         mensaje.className = 'mensaje-warn';
         return;
@@ -89,26 +125,24 @@ export class LpagegymComponent implements AfterViewInit {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(datos),
+        body: JSON.stringify({ ...datos, contacto: telefono }),
       });
 
       const resultado = await respuesta.json();
       if (respuesta.ok) {
-        mensaje.textContent = '¡Reserva enviada!. Ya comienzas el Cambio.';
+        mensaje.textContent = 'Reserva enviada. Te contactamos para confirmar tu sesión.';
         mensaje.className = 'mensaje-exito';
-
         formulario.reset();
       } else {
-        mensaje.textContent =
-          'Error: ' + (resultado.error || 'intenta de nuevo');
+        mensaje.textContent = 'No pudimos enviar la reserva. ' + (resultado.error || 'Intenta de nuevo.');
         mensaje.className = 'mensaje-error';
       }
     } catch {
-      mensaje.textContent = 'No se pudo conectar. Intenta de nuevo.';
+      mensaje.textContent = 'No pudimos conectar. Revisa tu conexión e intenta de nuevo.';
       mensaje.className = 'mensaje-error';
     } finally {
       btnEnviar.disabled = false;
-      btnEnviar.textContent = 'Reserva tu Sesión Gratis →';
+      btnEnviar.textContent = textoOriginal;
     }
   }
 }

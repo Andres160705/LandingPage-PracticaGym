@@ -1,235 +1,370 @@
+<a class="skip-link" href="#main">Saltar al contenido</a>
+
 <header id="siteHeader">
-  <div class="wrap">
-    <nav>
-      <a href="#" class="logo">
-        <span class="logo-mark"><span>MG</span></span>
-        MEGA FITNESS GYM
-      </a>
+  <div class="wrap header-inner">
+    <a href="#main" class="brand">
+      <span class="brand-mark" aria-hidden="true">MG</span>
+      <span>Mega Fitness Gym</span>
+    </a>
+
+    <nav class="primary-nav" id="primary-nav" [class.open]="menuAbierto" aria-label="Navegación principal">
       <ul class="nav-links">
-        <li><a href="#instalaciones" (click)="abrirMenuDesplegable()">Instalaciones</a></li>
-        <li><a href="#planes" (click)="abrirMenuDesplegable()">Planes</a></li>
-        <li><a href="#entrenadores" (click)="abrirMenuDesplegable()">Entrenadores</a></li>
-        <li><a href="#resultados" (click)="abrirMenuDesplegable()">Resultados</a></li>
+        <li><a href="#instalaciones" (click)="cerrarMenu()">Instalaciones</a></li>
+        <li><a href="#planes" (click)="cerrarMenu()">Planes</a></li>
+        <li><a href="#entrenadores" (click)="cerrarMenu()">Entrenadores</a></li>
+        <li><a href="#resultados" (click)="cerrarMenu()">Resultados</a></li>
       </ul>
-      <a href="#join" class="btn btn-brass">Agenda una sesión gratuita</a>
-      <button id="menu-desplegable" class="menu-desplegable" (click)="abrirMenuDesplegable()">
-        <span ></span>
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
+      <a href="#join" class="btn btn-header nav-cta" (click)="cerrarMenu()">Sesión gratis</a>
     </nav>
+
+    <button
+      type="button"
+      class="menu-toggle"
+      [class.is-open]="menuAbierto"
+      [attr.aria-expanded]="menuAbierto"
+      [attr.aria-label]="menuAbierto ? 'Cerrar menú' : 'Abrir menú'"
+      aria-controls="primary-nav"
+      (click)="abrirMenuDesplegable()">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
   </div>
 </header>
 
-<section class="hero">
-  <div class="wrap hero-inner">
-    <div class="eyebrow reveal">Desde 2023. Cambiando Vidas</div>
-    <h1 class="reveal">
-      ENTRENA COMO SI<br>
-      TU <span class="fill">PESO</span><br>
-      <span class="accent">TE </span> EXIGIERA
-    </h1>
-    <p class="hero-sub reveal">Sin espejos ni máquinas que trabajen por ti. Solo hierro, un plan hecho a tu medida y
-      entrenadores que te acompañan en cada repetición.</p>
-    <div class="hero-cta reveal">
-      <a href="#join" class="btn btn-brass">Reclama tu sesión gratuita →</a>
-      <a href="#classes" class="btn btn-ghost">Ver los Programas</a>
-    </div>
-    <div class="hero-stats reveal-stagger">
-      <div>
-        <div class="stat-num">2,400+</div>
-        <div class="stat-label">Miembros activos</div>
-      </div>
-      <div>
-        <div class="stat-num">48</div>
-        <div class="stat-label">Entrenadores expertos</div>
-      </div>
-      <div>
-        <div class="stat-num">6</div>
-        <div class="stat-label">Ubicación</div>
-      </div>
-      <div>
-        <div class="stat-num">190T</div>
-        <div class="stat-label">Levantado este mes</div>
-      </div>
-    </div>
-  </div>
-  <div class="scroll-cue"><span class="line"></span>SCROLL</div>
-</section>
-
-<div class="bar-divider">
-  <div class="rod"></div>
-  <div class="bar-track wrap">
-    <div class="plate lg"></div>
-    <div class="plate md"></div>
-    <div class="plate sm"></div>
-    <div class="label">45 / 25 / 10 / 5 / 2.5</div>
-    <div class="plate sm"></div>
-    <div class="plate md"></div>
-    <div class="plate lg"></div>
-  </div>
-</div>
-
-<section class="section" id="instalaciones">
-  <div class="wrap">
-    <div class="section-head reveal">
-      <div class="section-tag">Instalaciones</div>
-      <h2>Cada repetición tiene su razón</h2>
-      <p>Dos pisos, zona de disciplina. Nada aquí es por decoración — cada pieza de equipo merece su espacio.</p>
-    </div>
-  </div>
-  <div class="facility-grid reveal-stagger">
-    <div class="facility-card">
-      <img
-        src="/images/cardioZone.avif"
-        alt="Cardio Zone">
-      <div class="fnum">01</div>
-      <h3>Cardio Zone</h3>
-      <p>Todo tipo de máquinas de cardio para mantener tu ritmo cardiaco elevado.</p>
-      <div class="arrow">↗</div>
-    </div>
-    <div class="facility-card">
-      <img
-        src="/images/LiftingZone.avif"
-        alt="Lifting Zone">
-      <div class="fnum">02</div>
-      <h3>Lifting Zone</h3>
-      <p>Equipo especializado para levantamiento de pesas, incluyendo barra, discos y racks.</p>
-      <div class="arrow">↗</div>
-    </div>
-
-  </div>
-</section>
-
-<section class="section" id="planes">
-  <div class="wrap class-row">
-    <div>
-      <div class="section-tag reveal">Planes</div>
-      <h2 class="reveal"
-        style="font-family:var(--font-display);font-size:clamp(32px,4vw,48px);text-transform:uppercase;margin-bottom:34px;">
-        Elige tu plan</h2>
-      <ul class="class-list reveal-stagger">
-        <li><span class="cname">Plan Básico</span><span class="cmeta">Acceso 24/7 2 semanas</span></li>
-        <li><span class="cname">Plan Mensual</span><span class="cmeta">Acceso 24/7 1 mes</span></li>
-        <li><span class="cname">Plan Anual</span><span class="cmeta">Acceso 24/7 1 año</span></li>
-        <li><span class="cname">Plan personalizado</span><span class="cmeta">Acceso 24/7 1 mes</span></li>
-      </ul>
-    </div>
-  </div>
-</section>
-
-<section class="section" id="entrenadores">
-  <div class="wrap">
-    <div class="section-head reveal">
-      <div class="section-tag">Entrenadores</div>
-      <h2>Aprende de Personas especializadas</h2>
-      <p>Cada entrenador en el gimnasio está capacitado para guiarte a tu mejor versión.</p>
-    </div>
-    <div class="trainer-grid reveal-stagger">
-      <div class="trainer-card">
-        <div class="trainer-photo">
-          <img
-            src="/images/Entrenador_1.avif"
-            alt="Entrenador Lennin Pesas"><span class="initial"></span>
+<main id="main">
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div class="hero-copy">
+        <p class="kicker reveal">Gimnasio de fuerza desde 2023</p>
+        <h1 class="reveal">
+          <span>Entrena</span>
+          <span>como si tu</span>
+          <span>peso te</span>
+          <span>exigiera</span>
+        </h1>
+        <p class="hero-lead reveal">Un plan hecho a tu medida, entrenadores que te siguen de cerca y una sala donde cada repetición cuenta. Sin atajos.</p>
+        <div class="hero-actions reveal">
+          <a href="#join" class="btn btn-signal">Reserva tu sesión gratis</a>
+          <a href="#planes" class="btn btn-outline">Ver planes</a>
         </div>
-        <h4>Lennin</h4>
-        <div class="role">Entrenador</div>
+        <p class="hero-note reveal">Primera sesión sin costo. No pedimos tarjeta.</p>
       </div>
-      <div class="trainer-card">
-        <div class="trainer-photo">
-          <img
-            src="/images/Entrenador_2.avif"
-            alt="Entrenador Luis Pesas"><span class="initial"></span>
-        </div>
-        <h4>Luis</h4>
-        <div class="role">Entrenador</div>
-      </div>
-      <div class="trainer-card">
-        <div class="trainer-photo">
-          <img
-            src="/images/Entrenador_3.avif"
-            alt="Entrenador Jhonatán Pesas"> <span class="initial"></span>
-        </div>
-        <h4>Jhonatán</h4>
-        <div class="role">Entrenador</div>
-      </div>
-      <div class="trainer-card">
-        <div class="trainer-photo">
-          <img
-            src="/images/Entrenador_4.avif"
-            alt="Entrenadora Sofia Movilidad & Recuperación"> <span class="initial"></span>
-        </div>
-        <h4>Sofia Vargas</h4>
-        <div class="role">Movilidad & Recuperación</div>
-      </div>
-    </div>
-  </div>
-</section>
 
-<section class="results-wrap" id="resultados">
-  <div class="wrap">
-    <div class="section-head reveal" style="margin-bottom:50px;">
-      <div class="section-tag">Resultados</div>
-      <h2>Los Números No Mienten</h2>
+      <div class="hero-media reveal">
+        <figure class="hero-photo">
+          <img src="/images/header.avif" alt="Sala de entrenamiento de Mega Fitness Gym" fetchpriority="high" decoding="async">
+        </figure>
+        <div class="scoreboard" aria-label="La sala en números">
+          <div class="scoreboard-head"><span class="board-dot" aria-hidden="true"></span>La sala en números</div>
+          <div class="scoreboard-grid">
+            <div class="scoreboard-item">
+              <strong>2.400+</strong>
+              <span>miembros activos</span>
+            </div>
+            <div class="scoreboard-item">
+              <strong>48</strong>
+              <span>entrenadores</span>
+            </div>
+            <div class="scoreboard-item">
+              <strong>6</strong>
+              <span>sedes</span>
+            </div>
+            <div class="scoreboard-item">
+              <strong>190 t</strong>
+              <span>levantadas este mes</span>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-  </div>
-  <div class="results-grid reveal-stagger">
-    <div class="result-card">
-      <div class="quote-mark">"</div>
-      <p class="quote">Sumé 65 kg a mi total en ocho meses. La programación se adapta cuando fallas un levantamiento.
-      </p>
-      <div class="result-meta"><span class="name">Elena, Miembro desde 2023</span><span class="delta">+65kg</span></div>
-    </div>
-    <div class="result-card">
-      <div class="quote-mark">"</div>
-      <p class="quote">Primer gimnasio donde el coach conocía mis números antes de saludarme. Esa es toda la diferencia.
-      </p>
-      <div class="result-meta"><span class="name">Tomás, Miembro desde 2022</span><span class="delta">+41kg</span></div>
-    </div>
-    <div class="result-card">
-      <div class="quote-mark">"</div>
-      <p class="quote">Pasé de cero dominadas a cinco estrictas en doce semanas. La zona de recuperación es la ventaja
-        injusta</p>
-      <div class="result-meta"><span class="name">Priya, Miembro desde 2024</span><span class="delta">5 reps</span>
+  </section>
+
+  <div class="plate-rack" aria-hidden="true">
+    <div class="wrap plate-rack-inner">
+      <div class="plate-unit">
+        <span class="plate p25"></span>
+        <span class="plate-weight">25 kg</span>
+      </div>
+      <div class="plate-unit">
+        <span class="plate p20"></span>
+        <span class="plate-weight">20 kg</span>
+      </div>
+      <div class="plate-unit">
+        <span class="plate p15"></span>
+        <span class="plate-weight">15 kg</span>
+      </div>
+      <div class="plate-unit">
+        <span class="plate p10"></span>
+        <span class="plate-weight">10 kg</span>
+      </div>
+      <div class="plate-unit">
+        <span class="plate p5"></span>
+        <span class="plate-weight">5 kg</span>
+      </div>
+      <div class="plate-unit rail-optional">
+        <span class="plate p2"></span>
+        <span class="plate-weight">2,5 kg</span>
       </div>
     </div>
   </div>
-</section>
 
-<section class="cta" id="join">
-  <div class="wrap">
-    <h2 class="reveal">¿LISTO <span>PARA CARGAR LA BARRA?</span></h2>
-    <p class="reveal">Tu primera sesión es gratis, sin tarjeta. Trae el esfuerzo; el plan lo ponemos nosotros</p>
-    <form (submit)="enviarFormulario($event)">
-      <label for="name">Nombre:</label>
-      <input type="text" id="name" name="name" required (input)="bloquearNumeros($event)">
-      <label for="lastname">Apellido:</label>
-      <input type="text" id="lastname" name="lastname" required (input)="bloquearNumeros($event)">
-      <label for="edad">Edad:</label>
-      <input type="number" id="edad" name="edad" required>
-      <input class="honeypot" tabindex="-1" autocomplete="off" name="honeypot">   
-      <label for="contacto">Contacto:</label>
-      <input type="tel" id="contacto" name="contacto" required maxlength="20">
-      <button id="boton-enviar" type="submit" class="btn-2 btn-brass reveal">Reserva tu Sesión Gratis →</button>
-      <p id="mensaje"></p>
-    </form>
-  </div>
-</section>
+  <section class="section" id="instalaciones">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <p class="kicker">Instalaciones</p>
+          <h2>Dos zonas.<br>Cero excusas.</h2>
+        </div>
+        <p class="section-intro">Todo lo que necesitas para entrenar en serio, sin pasillos llenos de equipo que nadie usa.</p>
+      </div>
 
-<footer>
-  <div class="wrap"
-    style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:20px;width:100%;">
-    <div class="logo" style="font-size:16px;">
-      <span class="logo-mark" style="width:24px;height:24px;"><span style="font-size:10px;">MG</span></span>
-      MEGA FITNESS GYM
+      <div class="facility-grid">
+        <article class="facility-card">
+          <div class="facility-media">
+            <img src="/images/cardioZone.avif" alt="Zona de cardio con máquinas de entrenamiento" loading="lazy" decoding="async">
+            <span class="facility-tag">Cardio</span>
+          </div>
+          <div class="facility-body">
+            <h3>Cardio Zone</h3>
+            <p>Máquinas para ganar fondo, subir el pulso y sumar trabajo sin castigar las articulaciones.</p>
+          </div>
+        </article>
+
+        <article class="facility-card">
+          <div class="facility-media">
+            <img src="/images/LiftingZone.avif" alt="Zona de pesas con barras, discos y racks" loading="lazy" decoding="async">
+            <span class="facility-tag">Fuerza</span>
+          </div>
+          <div class="facility-body">
+            <h3>Lifting Zone</h3>
+            <p>Barras, discos, racks y bancos. La zona donde se construyen los básicos.</p>
+          </div>
+        </article>
+      </div>
     </div>
-    <div class="foot-links">
+  </section>
+
+  <section class="section section-plans" id="planes">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <p class="kicker kicker-light">Planes</p>
+          <h2>Elige cómo<br>entrenar.</h2>
+        </div>
+        <p class="section-intro">Acceso 24/7 en todos los planes. Tú decides cuánto tiempo y con qué acompañamiento.</p>
+      </div>
+
+      <div class="plan-board">
+        <div class="plan-row plan-row--labels" aria-hidden="true">
+          <span>Plan</span>
+          <span>Duración y acceso</span>
+          <span></span>
+        </div>
+
+        <a href="#join" class="plan-row">
+          <span class="plan-name">Básico<small>Para probar la sala</small></span>
+          <span class="plan-meta"><span>2 semanas</span><span>Acceso 24/7</span></span>
+          <span class="plan-arrow" aria-hidden="true">→</span>
+        </a>
+
+        <a href="#join" class="plan-row">
+          <span class="plan-name">Mensual<small>Sin permanencia</small></span>
+          <span class="plan-meta"><span>1 mes</span><span>Acceso 24/7</span></span>
+          <span class="plan-arrow" aria-hidden="true">→</span>
+        </a>
+
+        <a href="#join" class="plan-row plan-row--featured">
+          <span class="plan-name">Anual<span class="plan-badge">Recomendado</span><small>Para entrenar todo el año</small></span>
+          <span class="plan-meta"><span>12 meses</span><span>Acceso 24/7</span></span>
+          <span class="plan-arrow" aria-hidden="true">→</span>
+        </a>
+
+        <a href="#join" class="plan-row">
+          <span class="plan-name">Personalizado<small>Plan y seguimiento a tu medida</small></span>
+          <span class="plan-meta"><span>1 mes</span><span>Acceso 24/7</span></span>
+          <span class="plan-arrow" aria-hidden="true">→</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="entrenadores">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <p class="kicker">Entrenadores</p>
+          <h2>Gente que<br>sabe mirar.</h2>
+        </div>
+        <p class="section-intro">No basta con contar repeticiones. Nuestros entrenadores leen tu técnica, tu cansancio y tu progreso.</p>
+      </div>
+
+      <div class="trainer-grid">
+        <article class="trainer-card">
+          <div class="trainer-photo">
+            <img src="/images/Entrenador_1.avif" alt="Lennin, entrenador de fuerza" loading="lazy" decoding="async">
+          </div>
+          <div class="trainer-info">
+            <h3>Lennin</h3>
+            <p>Fuerza</p>
+          </div>
+        </article>
+
+        <article class="trainer-card">
+          <div class="trainer-photo">
+            <img src="/images/Entrenador_2.avif" alt="Luis, entrenador de fuerza" loading="lazy" decoding="async">
+          </div>
+          <div class="trainer-info">
+            <h3>Luis</h3>
+            <p>Fuerza</p>
+          </div>
+        </article>
+
+        <article class="trainer-card">
+          <div class="trainer-photo">
+            <img src="/images/Entrenador_3.avif" alt="Jhonatán, entrenador de fuerza" loading="lazy" decoding="async">
+          </div>
+          <div class="trainer-info">
+            <h3>Jhonatán</h3>
+            <p>Fuerza</p>
+          </div>
+        </article>
+
+        <article class="trainer-card">
+          <div class="trainer-photo">
+            <img src="/images/Entrenador_4.avif" alt="Sofia Vargas, entrenadora de movilidad y recuperación" loading="lazy" decoding="async">
+          </div>
+          <div class="trainer-info">
+            <h3>Sofia Vargas</h3>
+            <p>Movilidad y recuperación</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-results" id="resultados">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <p class="kicker kicker-light">Resultados</p>
+          <h2>El progreso<br>se mide.</h2>
+        </div>
+        <p class="section-intro">Tres personas, tres marcas personales. El trabajo detrás no se ve en una foto.</p>
+      </div>
+
+      <div class="result-list">
+        <article class="result-row">
+          <div class="result-metric">
+            <strong>+65</strong>
+            <span>kg en total</span>
+          </div>
+          <blockquote>
+            <p>“Sumé 65 kg a mi total en ocho meses. La programación se adapta cuando fallo un levantamiento.”</p>
+          </blockquote>
+          <div class="result-author">
+            <span class="result-author-name">Elena</span>
+            <span class="result-author-meta">Miembro desde 2023</span>
+          </div>
+        </article>
+
+        <article class="result-row">
+          <div class="result-metric">
+            <strong>+41</strong>
+            <span>kg en básicos</span>
+          </div>
+          <blockquote>
+            <p>“Es el primer gimnasio donde el coach conocía mis números antes de saludarme. Esa es toda la diferencia.”</p>
+          </blockquote>
+          <div class="result-author">
+            <span class="result-author-name">Tomás</span>
+            <span class="result-author-meta">Miembro desde 2022</span>
+          </div>
+        </article>
+
+        <article class="result-row">
+          <div class="result-metric">
+            <strong>5</strong>
+            <span>dominadas estrictas</span>
+          </div>
+          <blockquote>
+            <p>“Pasé de cero dominadas a cinco estrictas en doce semanas. La zona de recuperación es mi ventaja injusta.”</p>
+          </blockquote>
+          <div class="result-author">
+            <span class="result-author-name">Priya</span>
+            <span class="result-author-meta">Miembro desde 2024</span>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta" id="join">
+    <div class="wrap cta-grid">
+      <div class="cta-copy">
+        <p class="kicker kicker-on-signal">Primera sesión gratis</p>
+        <h2>Ven a cargar<br>la barra.</h2>
+        <p>Déjanos tus datos y coordinamos una sesión de prueba. Sin tarjeta, sin permanencia y con un plan de inicio incluido.</p>
+        <ul class="cta-points">
+          <li>Sin tarjeta</li>
+          <li>Sin permanencia</li>
+        </ul>
+      </div>
+
+      <form class="reservation-form" (submit)="enviarFormulario($event)">
+        <div class="form-head">
+          <h3>Reserva tu sesión</h3>
+          <p>Te contactamos para confirmar día y hora.</p>
+        </div>
+
+        <div class="form-grid">
+          <div class="field">
+            <label for="name">Nombre</label>
+            <input type="text" id="name" name="name" autocomplete="given-name" placeholder="Ana" required (input)="bloquearNumeros($event)">
+          </div>
+          <div class="field">
+            <label for="lastname">Apellido</label>
+            <input type="text" id="lastname" name="lastname" autocomplete="family-name" placeholder="Gómez" required (input)="bloquearNumeros($event)">
+          </div>
+          <div class="field">
+            <label for="edad">Edad</label>
+            <input type="number" id="edad" name="edad" inputmode="numeric" placeholder="28" required>
+          </div>
+          <div class="field">
+            <label for="contacto">Contacto</label>
+            <input type="tel" id="contacto" name="contacto" inputmode="numeric" autocomplete="tel" maxlength="10" placeholder="3001234567" required>
+          </div>
+        </div>
+
+        <input class="honeypot" tabindex="-1" autocomplete="off" name="honeypot" aria-hidden="true">
+        <button id="boton-enviar" type="submit" class="btn-2">Reservar sesión gratis</button>
+        <p id="mensaje" role="status" aria-live="polite"></p>
+        <p class="form-note">Solo usamos tus datos para coordinar la sesión.</p>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap footer-inner">
+    <div class="footer-brand">
+      <a href="#main" class="brand">
+        <span class="brand-mark" aria-hidden="true">MG</span>
+        <span>Mega Fitness Gym</span>
+      </a>
+      <p>Fuerza, disciplina y un plan que no se negocia.</p>
+    </div>
+
+    <nav class="footer-links" aria-label="Enlaces del pie">
       <a href="#instalaciones">Instalaciones</a>
       <a href="#planes">Planes</a>
       <a href="#entrenadores">Entrenadores</a>
       <a href="#resultados">Resultados</a>
+    </nav>
+
+    <div class="footer-meta">
+      <span>© 2026 Mega Fitness Gym</span>
+      <a href="#main">Volver arriba</a>
     </div>
-    <div class="copyright">© 2026 MEGA FITNESS GYM</div>
   </div>
 </footer>
